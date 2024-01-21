@@ -34,14 +34,14 @@ with top_col:
     top = df.nlargest(1, 'Rating')
     st.subheader(top['Name'].to_string(index=False))
     st.image(top['Avatar'].to_string(index=False))
-    st.subheader(f'Rating: {top['Rating'].to_string(index=False)}')
+    st.subheader(f"Rating: {top['Rating'].to_string(index=False)}")
 
 with bot_col:
     st.header('Shit Player')
     bot = df.drop(df[df.Games == 0].index).nsmallest(1, 'Rating')
     st.subheader(bot['Name'].to_string(index=False))
     st.image(bot['Avatar'].to_string(index=False))
-    st.subheader(f'Rating: {bot['Rating'].to_string(index=False)}')
+    st.subheader(f"Rating: {bot['Rating'].to_string(index=False)}")
 
 with rq_col:
     st.header('Rage Quit')
