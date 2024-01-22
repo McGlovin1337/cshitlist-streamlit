@@ -23,7 +23,7 @@ with st.container():
         column_config={
             'KpD': 'K/D Ratio',
             'Win_Rate': 'Win Rate (%)',
-            'Entry_Attempts': 'Entry Attempts'
+            'Entry_Attempts': 'Entry Attempts (%)'
         }
     )
 
@@ -79,11 +79,11 @@ with st.container():
         fanny = df.drop(df[df.Games == 0].index).nsmallest(1, 'Entry_Attempts')
         st.subheader(fanny['Name'].to_string(index=False))
         st.image(fanny['Avatar'].to_string(index=False))
-        st.subheader(f"Entry Attempts: {fanny['Entry_Attempts'].to_string(index=False)}")
+        st.subheader(f"Entry Attempts: {fanny['Entry_Attempts'].to_string(index=False)}%")
 
     with bd_col:
         st.header('Big Dick of the Week')
         big_dick = df.nlargest(1, 'Entry_Attempts')
         st.subheader(big_dick['Name'].to_string(index=False))
         st.image(big_dick['Avatar'].to_string(index=False))
-        st.subheader(f"Entry Attempts: {big_dick['Entry_Attempts'].to_string(index=False)}")
+        st.subheader(f"Entry Attempts: {big_dick['Entry_Attempts'].to_string(index=False)}%")
