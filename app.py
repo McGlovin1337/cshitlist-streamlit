@@ -23,7 +23,10 @@ with st.container():
         column_config={
             'KpD': 'K/D Ratio',
             'Win_Rate': 'Win Rate (%)',
-            'Entry_Attempts': 'Entry Attempts (%)'
+            'Entry_Attempts': 'Entry Attempts (%)',
+            'Kill_Shot_Ratio': 'Kill/Shot Ratio (%)',
+            'Best_Match': 'Best Match Rating',
+            'Worst_Match': 'Worst Match Rating'
         }
     )
 
@@ -72,7 +75,7 @@ with st.container():
         )
 
 with st.container():
-    fanny_col, bd_col = st.columns(2)
+    fanny_col, bd_col, b_match_col, w_match_col, blanks_col = st.columns(5)
 
     with fanny_col:
         st.header('Fanny of the Week')
@@ -87,3 +90,24 @@ with st.container():
         st.subheader(big_dick['Name'].to_string(index=False))
         st.image(big_dick['Avatar'].to_string(index=False))
         st.subheader(f"Entry Attempts: {big_dick['Entry_Attempts'].to_string(index=False)}%")
+
+    with b_match_col:
+        st.header("Can't Touch This")
+        best_match = df.nlargest(1, 'Best_Match')
+        st.subheader(best_match['Name'].to_string(index=False))
+        st.image(best_match['Avatar'].to_string(index=False))
+        st.subheader(f"Best Match Rating: {best_match['Best_Match'].to_string(index=False)}")
+
+    with w_match_col:
+        st.header('Chocolate Teapot')
+        worst_match = df.nsmallest(1, 'Worst_Match')
+        st.subheader(worst_match['Name'].to_string(index=False))
+        st.image(worst_match['Avatar'].to_string(index=False))
+        st.subheader(f"Worst Match Rating: {worst_match['Worst_Match'].to_string(index=False)}")
+
+    with blanks_col:
+        st.header('Firing Blanks')
+        worst_kill_shot_ratio = df.nsmallest(1, 'Kill_Shot_Ratio')
+        st.subheader(worst_kill_shot_ratio['Name'].to_string(index=False))
+        st.image(worst_kill_shot_ratio['Avatar'].to_string(index=False))
+        st.subheader(f"Kill/Shot Ratio: {worst_kill_shot_ratio['Kill_Shot_Ratio'].to_string(index=False)}%")
