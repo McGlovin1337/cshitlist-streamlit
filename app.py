@@ -100,14 +100,14 @@ with st.container():
 
     with w_match_col:
         st.header('Chocolate Teapot')
-        worst_match = df.nsmallest(1, 'Worst_Match')
+        worst_match = df.drop(df[df.Games == 0].index).nsmallest(1, 'Worst_Match')
         st.subheader(worst_match['Name'].to_string(index=False))
         st.image(worst_match['Avatar'].to_string(index=False))
         st.subheader(f"Worst Match Rating: {worst_match['Worst_Match'].to_string(index=False)}")
 
     with blanks_col:
         st.header('Firing Blanks')
-        worst_kill_shot_ratio = df.nsmallest(1, 'Kill_Shot_Ratio')
+        worst_kill_shot_ratio = df.drop(df[df.Games == 0].index).nsmallest(1, 'Kill_Shot_Ratio')
         st.subheader(worst_kill_shot_ratio['Name'].to_string(index=False))
         st.image(worst_kill_shot_ratio['Avatar'].to_string(index=False))
         st.subheader(f"Kill/Shot Ratio: {worst_kill_shot_ratio['Kill_Shot_Ratio'].to_string(index=False)}%")
