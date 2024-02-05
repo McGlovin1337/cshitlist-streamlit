@@ -111,3 +111,20 @@ with st.container():
         st.subheader(worst_kill_shot_ratio['Name'].to_string(index=False))
         st.image(worst_kill_shot_ratio['Avatar'].to_string(index=False))
         st.subheader(f"Kill/Shot Ratio: {worst_kill_shot_ratio['Kill_Shot_Ratio'].to_string(index=False)}%")
+
+with st.container():
+    th_col, apple_col = st.columns(2)
+
+    with th_col:
+        st.header('The Try Hard')
+        most_games = df.nlargest(1, 'Games')
+        st.subheader(most_games['Name'].to_string(index=False))
+        st.image(most_games['Avatar'].to_string(index=False))
+        st.subheader(f"Most Number of Games: {most_games['Games'].to_string(index=False)}")
+
+    with apple_col:
+        st.header('The Apple')
+        least_games = df.drop(df[df.Games == 0].index).nsmallest(1, 'Games')
+        st.subheader(least_games['Name'].to_string(index=False))
+        st.image(least_games['Avatar'].to_string(index=False))
+        st.subheader(f"Least Number of Games: {least_games['Games'].to_string(index=False)}")
