@@ -113,7 +113,7 @@ with st.container():
         st.subheader(f"Kill/Shot Ratio: {worst_kill_shot_ratio['Kill_Shot_Ratio'].to_string(index=False)}%")
 
 with st.container():
-    th_col, apple_col = st.columns(2)
+    th_col, apple_col, kills_col, deaths_col, assists_col = st.columns(5)
 
     with th_col:
         st.header('The Try Hard')
@@ -128,3 +128,24 @@ with st.container():
         st.subheader(least_games['Name'].to_string(index=False))
         st.image(least_games['Avatar'].to_string(index=False))
         st.subheader(f"Least Number of Games: {least_games['Games'].to_string(index=False)}")
+
+    with kills_col:
+        st.header('The Terminator')
+        most_kills = df.nlargest(1, 'Kills')
+        st.subheader(most_kills['Name'].to_string(index=False))
+        st.image(most_kills['Avatar'].to_string(index=False))
+        st.subheader(f"Most Kills: {most_kills['Kills'].to_string(index=False)}")
+
+    with deaths_col:
+        st.header('Canon Fodder')
+        most_deaths = df.nlargest(1, 'Deaths')
+        st.subheader(most_deaths['Name'].to_string(index=False))
+        st.image(most_deaths['Avatar'].to_string(index=False))
+        st.subheader(f"Most Deaths: {most_deaths['Deaths'].to_string(index=False)}")
+
+    with assists_col:
+        st.header('The Assistant')
+        most_assists = df.nlargest(1, 'Assists')
+        st.subheader(most_assists['Name'].to_string(index=False))
+        st.image(most_assists['Avatar'].to_string(index=False))
+        st.subheader(f"Most Assists: {most_assists['Assists'].to_string(index=False)}")
