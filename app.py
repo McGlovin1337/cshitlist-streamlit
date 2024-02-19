@@ -154,32 +154,32 @@ with st.container():
 with st.container():
     map_table, clutch_col = st.columns(2)
 
-    # with map_table:
-    #     st.header('Map Statistics')
-    #     map_stats = {}
-    #     for i, r in df.iterrows():
-    #         for k, v in r['Maps'].items():
-    #             try:
-    #                 map_stats[k] = map_stats[k] + v
-    #             except KeyError:
-    #                 map_stats[k] = v
+    with map_table:
+        st.header('Map Statistics')
+        map_stats = {}
+        for i, r in df.iterrows():
+            for k, v in r['Maps'].items():
+                try:
+                    map_stats[k] = map_stats[k] + v
+                except KeyError:
+                    map_stats[k] = v
 
-    #     map_tbl = pd.DataFrame(map_stats.items())
-    #     map_tbl.columns = ['Map', 'Games']
-    #     map_tbl.sort_values(by='Games', inplace=True, ascending=False)
+        map_tbl = pd.DataFrame(map_stats.items())
+        map_tbl.columns = ['Map', 'Games']
+        map_tbl.sort_values(by='Games', inplace=True, ascending=False)
 
-    #     st.dataframe(
-    #         data=map_tbl,
-    #         use_container_width=True,
-    #         hide_index=True
-    #     )
+        st.dataframe(
+            data=map_tbl,
+            use_container_width=True,
+            hide_index=True
+        )
 
     with clutch_col:
         st.header('Clutch Minister')
         clutch_pts = {}
         for i, r in df.iterrows():
             clutch_pts.update(
-                {f'{r['Name']}': r['1v1'] + (3 * r['1v2']) + (5 * r['1v3']) + (7 * r['1v4']) + (10 * r['1v5'])}
+                {f"{r['Name']}": r['1v1'] + (3 * r['1v2']) + (5 * r['1v3']) + (7 * r['1v4']) + (10 * r['1v5'])}
             )
 
         clutch_minister = max(clutch_pts, key=clutch_pts.get)
