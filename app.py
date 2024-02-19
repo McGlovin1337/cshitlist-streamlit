@@ -154,25 +154,25 @@ with st.container():
 with st.container():
     map_table, clutch_col = st.columns(2)
 
-    with map_table:
-        st.header('Map Statistics')
-        map_stats = {}
-        for i, r in df.iterrows():
-            for k, v in r['Maps'].items():
-                try:
-                    map_stats[k] = map_stats[k] + v
-                except KeyError:
-                    map_stats[k] = v
+    # with map_table:
+    #     st.header('Map Statistics')
+    #     map_stats = {}
+    #     for i, r in df.iterrows():
+    #         for k, v in r['Maps'].items():
+    #             try:
+    #                 map_stats[k] = map_stats[k] + v
+    #             except KeyError:
+    #                 map_stats[k] = v
 
-        map_tbl = pd.DataFrame(map_stats.items())
-        map_tbl.columns = ['Map', 'Games']
-        map_tbl.sort_values(by='Games', inplace=True, ascending=False)
+    #     map_tbl = pd.DataFrame(map_stats.items())
+    #     map_tbl.columns = ['Map', 'Games']
+    #     map_tbl.sort_values(by='Games', inplace=True, ascending=False)
 
-        st.dataframe(
-            data=map_tbl,
-            use_container_width=True,
-            hide_index=True
-        )
+    #     st.dataframe(
+    #         data=map_tbl,
+    #         use_container_width=True,
+    #         hide_index=True
+    #     )
 
     with clutch_col:
         st.header('Clutch Minister')
