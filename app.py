@@ -8,7 +8,8 @@ with open('player_stats.json', 'r', encoding='utf-8') as f:
 pd.set_option('display.max_colwidth', 500)
 df = pd.DataFrame.from_dict(stats)
 
-stats = df.drop(columns='Avatar', axis=1)
+stats = df.drop(columns=['Avatar', 'Maps'], axis=1)
+stats.sort_values(by=['Rating'], ascending=False, inplace=True)
 
 st.set_page_config(layout='wide')
 
@@ -149,3 +150,46 @@ with st.container():
         st.subheader(most_assists['Name'].to_string(index=False))
         st.image(most_assists['Avatar'].to_string(index=False))
         st.subheader(f"Most Assists: {most_assists['Assists'].to_string(index=False)}")
+
+with st.container():
+    map_table, clutch_col = st.columns(2)
+
+    with map_table:
+        st.header('Map Statistics')
+        map_stats = {}
+        for i, r in df.iterrows():
+            for k, v in r['Maps'].items():
+                try:
+                    map_stats[k] = map_stats[k] + v
+                except KeyError:
+                    map_stats[k] = v
+
+        map_tbl = pd.DataFrame(map_stats.items())
+        map_tbl.columns = ['Map', 'Games']
+        map_tbl.sort_values(by='Games', inplace=True, ascending=False)
+
+        st.dataframe(
+            data=map_tbl,
+            use_container_width=True,
+            hide_index=True
+        )
+
+    with clutch_col:
+        st.header('Clutch Minister')
+        clutch_pts = {}
+        for i, r in df.iterrows():
+            clutch_pts.update(
+                {f'{r['Name']}': r['1v1'] + (3 * r['1v2']) + (5 * r['1v3']) + (7 * r['1v4']) + (10 * r['1v5'])}
+            )
+
+        clutch_minister = max(clutch_pts, key=clutch_pts.get)
+        st.subheader(clutch_minister)
+        st.image(df[df['Name'] == clutch_minister]['Avatar'].to_string(index=False))
+        st.subheader(f'Clutch Points: {clutch_pts[clutch_minister]}')
+        st.text(f"""
+        1v1: {df[df['Name'] == clutch_minister]['1v1'].to_string(index=False)} x 1pt
+        1v2: {df[df['Name'] == clutch_minister]['1v2'].to_string(index=False)} x 3pts
+        1v3: {df[df['Name'] == clutch_minister]['1v3'].to_string(index=False)} x 5pts
+        1v4: {df[df['Name'] == clutch_minister]['1v4'].to_string(index=False)} x 7pts
+        1v5: {df[df['Name'] == clutch_minister]['1v5'].to_string(index=False)} x 10pts
+        """)
