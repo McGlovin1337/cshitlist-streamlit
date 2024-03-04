@@ -152,7 +152,7 @@ with st.container():
         st.subheader(f"Most Assists: {most_assists['Assists'].to_string(index=False)}")
 
 with st.container():
-    map_table, clutch_col, multik_col = st.columns(3)
+    map_table, clutch_col, multik_col, kobe_col = st.columns(4)
 
     with map_table:
         st.header('Map Statistics')
@@ -211,3 +211,10 @@ with st.container():
         4k: {df[df['Name'] == multi_killa]['4k'].to_string(index=False)} x 7pts
         5k: {df[df['Name'] == multi_killa]['5k'].to_string(index=False)} x 10pts
         """)
+
+    with kobe_col:
+        st.header('The Kobe')
+        most_ud = df.nlargest(1, 'UD')
+        st.subheader(most_ud['Name'].to_string(index=False))
+        st.image(most_ud['Avatar'].to_string(index=False))
+        st.subheader(f"Highest UD: {most_ud['UD'].to_string(index=False)}")
