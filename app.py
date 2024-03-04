@@ -152,7 +152,7 @@ with st.container():
         st.subheader(f"Most Assists: {most_assists['Assists'].to_string(index=False)}")
 
 with st.container():
-    map_table, clutch_col = st.columns(2)
+    map_table, clutch_col, multik_col = st.columns(3)
 
     with map_table:
         st.header('Map Statistics')
@@ -192,4 +192,22 @@ with st.container():
         1v3: {df[df['Name'] == clutch_minister]['1v3'].to_string(index=False)} x 5pts
         1v4: {df[df['Name'] == clutch_minister]['1v4'].to_string(index=False)} x 7pts
         1v5: {df[df['Name'] == clutch_minister]['1v5'].to_string(index=False)} x 10pts
+        """)
+
+    with multik_col:
+        st.header('Multi-Killa')
+        mk_pts = {}
+        for i, r in df.iterrows():
+            mk_pts.update(
+                {f"{r['Name']}": (4 * r['3k']) + (7 * r['4k']) + (10 * r['5k'])}
+            )
+
+        multi_killa = max(mk_pts, key=mk_pts.get)
+        st.subheader(multi_killa)
+        st.image(df[df['Name'] == multi_killa]['Avatar'].to_string(index=False))
+        st.subheader(f'Multi Kill Points: {mk_pts[multi_killa]}')
+        st.text(f"""
+        3k: {df[df['Name'] == multi_killa]['3k'].to_string(index=False)} x 4pts
+        4k: {df[df['Name'] == multi_killa]['4k'].to_string(index=False)} x 7pts
+        5k: {df[df['Name'] == multi_killa]['5k'].to_string(index=False)} x 10pts
         """)
