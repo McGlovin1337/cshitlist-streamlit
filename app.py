@@ -75,6 +75,8 @@ with st.container():
             hide_index=True
         )
 
+df.drop(df[df.Games == 0].index, inplace=True)
+
 with st.container():
     fanny_col, bd_col, b_match_col, w_match_col, blanks_col = st.columns(5)
 
@@ -131,25 +133,52 @@ with st.container():
         st.subheader(f"Least Number of Games: {least_games['Games'].to_string(index=False)}")
 
     with kills_col:
+        avg_kills = [
+            {
+                'Name': k['Name'],
+                'Kills': round(int(k['Kills']) / int(k['Games']), 2),
+                'Avatar': k['Avatar']
+            }
+            for _, k in df.iterrows()
+        ]
+        df_avg_kills = pd.DataFrame.from_records(avg_kills)
         st.header('The Terminator')
-        most_kills = df.nlargest(1, 'Kills')
+        most_kills = df_avg_kills.nlargest(1, 'Kills')
         st.subheader(most_kills['Name'].to_string(index=False))
         st.image(most_kills['Avatar'].to_string(index=False))
-        st.subheader(f"Avg Kills per Game: {round(int(most_kills['Kills'].to_string(index=False)) / int(most_kills['Games'].to_string(index=False)), 2)}")
+        st.subheader(f"Avg Kills per Game: {most_kills['Kills'].to_string(index=False)}")
 
     with deaths_col:
         st.header('Canon Fodder')
-        most_deaths = df.nlargest(1, 'Deaths')
+        avg_deaths = [
+            {
+                'Name': k['Name'],
+                'Deaths': round(int(k['Deaths']) / int(k['Games']), 2),
+                'Avatar': k['Avatar']
+            }
+            for _, k in df.iterrows()
+        ]
+        df_avg_deaths = pd.DataFrame.from_records(avg_deaths)
+        most_deaths = df_avg_deaths.nlargest(1, 'Deaths')
         st.subheader(most_deaths['Name'].to_string(index=False))
         st.image(most_deaths['Avatar'].to_string(index=False))
-        st.subheader(f"Avg Deaths per Game: {round(int(most_deaths['Deaths'].to_string(index=False)) / int(most_deaths['Games'].to_string(index=False)), 2)}")
+        st.subheader(f"Avg Deaths per Game: {most_deaths['Deaths'].to_string(index=False)}")
 
     with assists_col:
         st.header('The Assistant')
-        most_assists = df.nlargest(1, 'Assists')
+        avg_assists = [
+            {
+                'Name': k['Name'],
+                'Assists': round(int(k['Assists']) / int(k['Games']), 2),
+                'Avatar': k['Avatar']
+            }
+            for _, k in df.iterrows()
+        ]
+        df_avg_assists = pd.DataFrame.from_records(avg_assists)
+        most_assists = df_avg_assists.nlargest(1, 'Assists')
         st.subheader(most_assists['Name'].to_string(index=False))
         st.image(most_assists['Avatar'].to_string(index=False))
-        st.subheader(f"Avg Assists per Game: {round(int(most_assists['Assists'].to_string(index=False)) / int(most_assists['Games'].to_string(index=False)), 2)}")
+        st.subheader(f"Avg Assists per Game: {most_assists['Assists'].to_string(index=False)}")
 
 with st.container():
     map_table, clutch_col, multik_col, kobe_col = st.columns(4)
@@ -214,7 +243,16 @@ with st.container():
 
     with kobe_col:
         st.header('The Kobe')
-        most_ud = df.nlargest(1, 'UD')
+        avg_ud = [
+            {
+                'Name': k['Name'],
+                'UD': round(int(k['UD']) / int(k['Games']), 2),
+                'Avatar': k['Avatar']
+            }
+            for _, k in df.iterrows()
+        ]
+        df_avg_ud = pd.DataFrame.from_records(avg_ud)
+        most_ud = df_avg_ud.nlargest(1, 'UD')
         st.subheader(most_ud['Name'].to_string(index=False))
         st.image(most_ud['Avatar'].to_string(index=False))
-        st.subheader(f"Avg UD per Game: {round(int(most_ud['UD'].to_string(index=False)) / int(most_ud['Games'].to_string(index=False)), 2)}")
+        st.subheader(f"Avg UD per Game: {most_ud['UD'].to_string(index=False)}")
