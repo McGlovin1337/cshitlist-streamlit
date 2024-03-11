@@ -135,21 +135,21 @@ with st.container():
         most_kills = df.nlargest(1, 'Kills')
         st.subheader(most_kills['Name'].to_string(index=False))
         st.image(most_kills['Avatar'].to_string(index=False))
-        st.subheader(f"Most Kills: {most_kills['Kills'].to_string(index=False)}")
+        st.subheader(f"Avg Kills per Game: {round(int(most_kills['Kills'].to_string(index=False)) / int(most_kills['Games'].to_string(index=False)), 2)}")
 
     with deaths_col:
         st.header('Canon Fodder')
         most_deaths = df.nlargest(1, 'Deaths')
         st.subheader(most_deaths['Name'].to_string(index=False))
         st.image(most_deaths['Avatar'].to_string(index=False))
-        st.subheader(f"Most Deaths: {most_deaths['Deaths'].to_string(index=False)}")
+        st.subheader(f"Avg Deaths per Game: {round(int(most_deaths['Deaths'].to_string(index=False)) / int(most_deaths['Games'].to_string(index=False)), 2)}")
 
     with assists_col:
         st.header('The Assistant')
         most_assists = df.nlargest(1, 'Assists')
         st.subheader(most_assists['Name'].to_string(index=False))
         st.image(most_assists['Avatar'].to_string(index=False))
-        st.subheader(f"Most Assists: {most_assists['Assists'].to_string(index=False)}")
+        st.subheader(f"Avg Assists per Game: {round(int(most_assists['Assists'].to_string(index=False)) / int(most_assists['Games'].to_string(index=False)), 2)}")
 
 with st.container():
     map_table, clutch_col, multik_col, kobe_col = st.columns(4)
@@ -217,4 +217,4 @@ with st.container():
         most_ud = df.nlargest(1, 'UD')
         st.subheader(most_ud['Name'].to_string(index=False))
         st.image(most_ud['Avatar'].to_string(index=False))
-        st.subheader(f"Highest UD: {most_ud['UD'].to_string(index=False)}")
+        st.subheader(f"Avg UD per Game: {round(int(most_ud['UD'].to_string(index=False)) / int(most_ud['Games'].to_string(index=False)), 2)}")
