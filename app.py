@@ -256,3 +256,11 @@ with st.container():
         st.subheader(most_ud['Name'].to_string(index=False))
         st.image(most_ud['Avatar'].to_string(index=False))
         st.subheader(f"Avg UD per Game: {most_ud['UD'].to_string(index=False)}")
+
+with st.container():
+    chfk, _ = st.columns(2)
+
+    with chfk:
+        st.header('Chessington Fuck')
+        st.subheader('Snizzle')
+        st.image('https://avatars.steamstatic.com/6330c0531c83e7262767b52a29728f6801bcc289_full.jpg')
