@@ -259,9 +259,19 @@ if df['Games'].sum() > 0:
             st.subheader(f"Avg UD per Game: {most_ud['UD'].to_string(index=False)}")
 
 with st.container():
-    chfk, _ = st.columns(2)
+    chfk, rq2 = st.columns(2)
 
     with chfk:
         st.header('Chessington Fuck')
         st.subheader('Snizzle')
         st.image('https://avatars.steamstatic.com/6330c0531c83e7262767b52a29728f6801bcc289_full.jpg')
+
+    if df['Games'].sum() == 0:
+        with rq2:
+            st.header('Rage Quit')
+            rqs = df.drop(df[df.Games > 0].index).filter(['Name'])
+            st.dataframe(
+                data=rqs,
+                use_container_width=True,
+                hide_index=True
+            )
